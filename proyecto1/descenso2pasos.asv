@@ -1,0 +1,29 @@
+function [W, H] = descenso2pasos(X, k)
+% Metodo de descenso en dos pasos 
+% Min   ||X - W*H ||_F^2
+% s.a.   W >= 0
+%        H >= 0
+%
+% Llamado: [W, H] = descenso2pasos(X, k);
+% Input
+% X.- matriz rxp con X(i,j) >= 0
+% k.- numero de iteraciones del metodo
+%
+%Out
+% W.- matriz rxk con W(i,j) >= 0
+% H.- matriz kxp con H(i,j) >= 0
+% con W*H aproxima la matriz X
+%
+%--------------------------------------------------------------------------
+% Optimización Numérica
+% Proyecto 1
+% 30 de septiembre del 2020
+% ITAM
+%--------------------------------------------------------------------------
+[r,p] = size(X);
+W = ones(r,k);
+H = one(k,p
+
+
+% Usaremos el metodo de puntos interiores
+% [x, y, µ] = punintpc(Q, A, c, b)
