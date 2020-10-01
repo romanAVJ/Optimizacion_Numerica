@@ -96,6 +96,7 @@ while(norma > tol & iter < maxiter) % Parte iterativa del método de Newton
         tau = (0.5)*(mu'*z)/p; % promedio de la complementaridad
      %-------------------------------------------------------  
        %Condiciones necesarias de primer orden
+       
        H=[Q*x+A'*lambda-F'*mu+c;A*x-b; F*x-z-d; mu.*z ];
        norma = norm(H);
        iter = iter + 1;
