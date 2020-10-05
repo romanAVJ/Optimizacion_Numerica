@@ -18,7 +18,7 @@ function [x, y, mu] = punintpc(Q,A,c,b)
 %     de desigualdad.
 %---------------------------------------------------------------------------
 % Optimizacion Numerica
-% Ultima actualizacion 1.oct.20
+% Ultima actualizacion 5.oct.20
 % Equipo: Santiago Muriel
 %         Mariana G Martinez
 %         Roman Velez
@@ -40,6 +40,7 @@ x = ones(n,1); % minimo aproximado inicial
 mu = ones(m,1); % multiplicador de Lagrange inicial
 y = ones(m,1); % variable de holgura inicial
 gamma = (0.5)*(mu'*y)/m; % actualizacion de la perturbacion de las KKT
+e = ones(m,1);
 %-----------------------------------------------
 % vectores para graficacion
 cnpo=[]; comp =[];
@@ -48,14 +49,12 @@ cnpo=[]; comp =[];
 % un poco distinta (no tiene un bloque de renglon)
 H = [Q*x - A'*mu + c; A*x - y - b; mu.*y];
 norma = norm(H);
-disp('Iter      CNPO             gamma ')
-disp('-----------------------------------------')
 while(norma > tol & iter < maxiter) % Parte iterativa del método de Newton
   % Resuelve el sistema lineal de Newton para la trayectoria central
   YminU = (1./y).*mu;
   rx = Q*x - A'*mu + c;
   ry = A*x - y - b;
-  rmu = y.*mu - gamma;
+  rmu = y.*mu - gamma*e;
   %---------------------------------------------------------- 
     % Resolvemos el sistema lineal
   K = Q + A'*diag(YminU)*A;
@@ -102,7 +101,6 @@ while(norma > tol & iter < maxiter) % Parte iterativa del método de Newton
        iter = iter + 1;
        cnpo =[cnpo norma];
        comp = [comp 2*gamma];
-       disp(sprintf('%3.0f  %2.8f  %2.8f',iter,norma,2*gamma))
 end
 
    semilogy([1:iter],cnpo,'r',[1:iter],comp,'b')
